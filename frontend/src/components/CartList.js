@@ -25,33 +25,33 @@ const CartList = ({ product }) => {
       key={product.skuId}
       className="mt-2 flex h-[100px] justify-between items-center"
     >
-      <div className="flex">
-        <div className="w-[80px] h-[100px] ">
-          <img
-            className="w-full h-full object-contain rounded-md "
-            src={product.thumbnail}
-            alt="product thumbnail"
-          />
-        </div>
-        <div className="mx-2 flex flex-col justify-between my-3">
-          <span className="text-lg font-semibold whitespace-nowrap">
-            {product.title}
-          </span>
-          <p className="font-light">Color:{product.color}</p>
-          <AiOutlineClose />
-        </div>
-      </div>
-      <div className="my-auto">
-        <div className="h-7 w-20  flex items-center border-[1px] rounded-lg">
-          <button onClick={handleDecrease} className="px-2">
-            {" "}
-            -{" "}
-          </button>
-          <p className="px-2 font-Quicksand">{quantity}</p>
-          <button onClick={handleIncrease} className="px-2">
-            {" "}
-            +{" "}
-          </button>
+      <div className="flex w-4/5">
+        <div className="flex w-4/5">
+          <div className="w-[80px] h-[100px] ">
+            <img
+              className="w-full h-full object-contain rounded-md "
+              src={product.thumbnail}
+              alt="product thumbnail"
+            />
+          </div>
+          <div className="flex w-4/5 flex-col items-center md:flex-row md:justify-between">
+            <div className="mx-2 flex  flex-col">
+              <span className="text-medium font-semibold whitespace-nowrap">
+                {product.title}
+              </span>
+              <p className="font-light">Color:{product.color}</p>
+            </div>
+            <div className="h-6 w-20 my-auto  flex items-center border-[1px] rounded-lg">
+              <button onClick={handleDecrease} className="px-2">
+                -
+              </button>
+              <p className="px-2 font-Quicksand">{quantity}</p>
+              <button onClick={handleIncrease} className="px-2">
+                {" "}
+                +
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div className="my-auto">

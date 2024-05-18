@@ -1,9 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import { useSelector } from "react-redux";
-// const token = useSelector((state) => {
-//   return state.auth.data;
-// });
-// console.log(token);
 
 const cartApi = createApi({
   reducerPath: "cart",

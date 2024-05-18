@@ -6,7 +6,8 @@ import ShopPage from "./Pages/ShopPage";
 import HomePage from "./Pages/HomePage";
 import SignupPage from "./Pages/SignupPage";
 import Login from "./Pages/Login";
-import Skeleton from "./components/ui/Skeleton";
+import CheckoutPage from "./Pages/CheckoutPage";
+import Success from "./components/Success";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const App = () => {
   return (
@@ -21,7 +22,8 @@ const App = () => {
           <Route path="/postproducts" element={<PostProduct />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignupPage />}></Route>
-          <Route path="/skeleton" element={<Skeleton />}></Route>
+          <Route path="/checkout" element={<CheckoutPage />}></Route>
+          <Route path="/success" element={<Success />}></Route>
         </Routes>
       </Router>
     </div>
