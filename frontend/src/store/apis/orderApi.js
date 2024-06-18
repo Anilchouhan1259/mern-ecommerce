@@ -20,8 +20,20 @@ const orderApi = createApi({
           };
         },
       }),
+      getOrder: builder.query({
+        query: () => {
+          return {
+            url: "/orders",
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-type": "application/json;charset=UTF-8",
+            },
+          };
+        },
+      }),
     };
   },
 });
-export const { usePostOrderMutation } = orderApi;
+export const { usePostOrderMutation, useGetOrderQuery } = orderApi;
 export { orderApi };

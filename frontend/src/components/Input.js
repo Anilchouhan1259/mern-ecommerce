@@ -16,7 +16,7 @@ const Input = ({
   const isError = inputError(errors, name);
   const isInvalid = isFormInvalid(isError);
   return (
-    <div className="w-full">
+    <div className="">
       {isInvalid && (
         <div className="animate-bounce text-sm text-red-600">
           {isError.error.message}

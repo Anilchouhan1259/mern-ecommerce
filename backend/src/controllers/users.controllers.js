@@ -3,21 +3,26 @@ const userModel = require("../models/users.model");
 const jwt = require("jsonwebtoken");
 
 async function userRegistration(req, res) {
-  const { name, email, password, confirmPassword, tc } = req.body;
+  const { firstName, lastName, email, password, confirmPassword, tc } =
+    req.body;
   const user = await userModel.findOne({ email });
   if (user) {
     return res.status(400).json({
       message: "This Email is already in use",
     });
   } else {
-    if (name && email && password && confirmPassword && tc) {
+    if (firstName && lastName && email && password && confirmPassword && tc) {
+      const displayName = firstName + " " + lastName;
+
       if (password === confirmPassword) {
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
         const user = new userModel({
-          name: name,
+          firstName: firstName,
+          lastName: lastName,
           email: email,
           password: hashPassword,
+          displayName: displayName,
           tc: tc,
         });
         try {
@@ -88,7 +93,32 @@ async function userLogin(req, res) {
   }
 }
 
+function userLogout(req, res) {
+  res.clearCookie("token", { path: "/", domain: "localhost" });
+
+  return res.send({ message: "Logged out and cookie deleted" });
+}
+
+async function getInfo(req, res) {
+  const { userId } = req.body;
+  const info = await userModel.findOne({ _id: userId }).select("-password");
+  return res.status(200).json(info);
+}
+async function postUserInfo(req, res) {
+  const { userId, firstName, lastName, email, displayName, phoneNumber } =
+    req.body;
+  const newFields = { firstName, lastName, displayName, email, phoneNumber };
+  const updatedValue = await userModel.findOneAndUpdate(
+    { _id: userId },
+    { $set: newFields },
+    { new: true }
+  );
+  return res.status(201).json(updatedValue);
+}
 module.exports = {
   userRegistration,
   userLogin,
+  userLogout,
+  getInfo,
+  postUserInfo,
 };

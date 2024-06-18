@@ -9,8 +9,7 @@ const productsApi = createApi({
       fetchProducts: builder.query({
         query: (category) => {
           return {
-            url: `/${category}`,
-            params: {},
+            url: `/?category=${encodeURIComponent(category)}`,
             method: "GET",
           };
         },

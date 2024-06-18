@@ -10,12 +10,13 @@ const PostProduct = () => {
     discription: "",
     price: "",
     thumbnail: "",
-    category: "",
+    category: "earbud",
   });
   const [skus, setSkus] = useState([
     { color: "", quantity: "", images: ["", "", "", ""] },
   ]);
   const handleCategory = (value) => {
+    console.log(value);
     setFormData({ ...formData, category: value });
   };
   const handleSkuChange = (index, event) => {
@@ -24,6 +25,7 @@ const PostProduct = () => {
     newSkus[index][name] = value;
     setSkus(newSkus);
   };
+  console.log(formData.category);
   const handleImagesChange = (index, imgInd, event) => {
     const newImages = skus[index].images;
     console.log(newImages);

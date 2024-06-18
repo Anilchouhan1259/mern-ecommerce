@@ -33,7 +33,10 @@ const Carousel = ({ images }) => {
                     ind !== 0 ? "mt-7" : ""
                   }`}
                 >
-                  <img src={elem} className="object-cover w-full h-full"></img>
+                  <img
+                    src={elem}
+                    className="object-contain w-full h-full"
+                  ></img>
                   <div className="absolute top-0 h-[80px] w-[80px] bg-gray-700 opacity-80"></div>
                 </div>
               );
@@ -43,7 +46,7 @@ const Carousel = ({ images }) => {
                 key={ind}
                 className={`w-[80px] h-[80px] ${ind !== 0 ? "mt-7" : ""}`}
               >
-                <img src={elem} className="object-cover w-full h-full"></img>
+                <img src={elem} className="object-contain w-full h-full"></img>
               </div>
             );
           })}

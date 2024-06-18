@@ -8,20 +8,22 @@ import { useState } from "react";
 const Navbar = () => {
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
-    console.log("click");
     setIsClicked(!isClicked);
   };
   return (
-    <div className="border-b-[1px] border-gray-200">
-      {/* <Notification /> */}
-      <nav className="flex justify-between items-center mx-20 my-2  ">
-        <div className="block md:hidden absolute aspect-square  z-10000 left-2 top-2">
+    <div className=" border-b-[1px] border-gray-200 w-full">
+      <nav className=" flex justify-between items-center mx-20 my-2  ">
+        <div className="block md:hidden absolute aspect-square  z-100 left-2 top-2">
           <NavButton handleClick={handleClick} />
         </div>
         <div className="text-xl font-semibold">Fieren</div>
         <NavLinks isClicked={isClicked} />
+
         <NavLink to="/cart">
-          <FiShoppingCart />
+          <FiShoppingCart
+            className="text-gray-700 hover:text-black"
+            size={22}
+          />
         </NavLink>
       </nav>
     </div>

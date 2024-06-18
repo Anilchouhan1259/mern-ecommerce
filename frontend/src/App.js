@@ -8,10 +8,13 @@ import SignupPage from "./Pages/SignupPage";
 import Login from "./Pages/Login";
 import CheckoutPage from "./Pages/CheckoutPage";
 import Success from "./components/Success";
+import ProfilePage from "./Pages/ProfilePage";
+import Orders from "./components/Orders";
+import ShipmentTracker from "./components/ShipmentTracker";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const App = () => {
   return (
-    <div className="font-Montserrat text-black ">
+    <div className="font-Montserrat tracking-tight text-black bg-blue- ">
       <Router>
         <Navbar />
         <Routes>
@@ -24,6 +27,9 @@ const App = () => {
           <Route path="/signup" element={<SignupPage />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
           <Route path="/success" element={<Success />}></Route>
+          <Route path="/profile" element={<ProfilePage />}></Route>
+          <Route path="/orders" element={<Orders />}></Route>
+          <Route path="/track" element={<ShipmentTracker />}></Route>
         </Routes>
       </Router>
     </div>

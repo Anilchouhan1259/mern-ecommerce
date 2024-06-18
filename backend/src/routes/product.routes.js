@@ -8,6 +8,7 @@ const {
 const productRoutes = express.Router();
 
 productRoutes.post("/", postProduct);
-productRoutes.get("/:category", getProductsByCategory);
-productRoutes.get("/product/:id", getProductsById);
+productRoutes.get("/:id", getProductsById);
+productRoutes.get("/", getProductsByCategory);
+
 module.exports = productRoutes;

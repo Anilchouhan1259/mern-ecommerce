@@ -2,6 +2,8 @@ const productModel = require("../models/product.model");
 
 async function postProduct(req, res) {
   const { title, discription, price, category, thumbnail, sku } = req.body;
+  console.log(req.body);
+
   if (title && discription && price && category && thumbnail && sku) {
     try {
       await productModel.updateOne(
@@ -21,7 +23,8 @@ async function postProduct(req, res) {
         }
       );
       console.log(thumbnail);
-    } catch {
+    } catch (err) {
+      console.log(err);
       return res.status(400).json({
         err: "error while inserting product",
       });
@@ -37,17 +40,15 @@ async function postProduct(req, res) {
   }
 }
 async function getProductsByCategory(req, res) {
-  const category = req.params.category;
+  const category = req.query.category;
   const products = await productModel
     .find({ category })
     .select("title price thumbnail");
   res.status(200).json(products);
 }
 async function getProductsById(req, res) {
-  console.log(req.params.id);
   const id = req.params.id;
   const product = await productModel.findOne({ _id: id });
-  console.log(product);
   res.status(200).json(product);
 }
 module.exports = {

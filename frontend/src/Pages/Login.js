@@ -1,18 +1,27 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Input from "../components/Input";
-import { useLoginMutation } from "../store/apis/registrationApi";
+import { useLoginMutation } from "../store/apis/usersApi";
+import { setIsLogin } from "../store/slices/profileSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [setLogin, responseInfo] = useLoginMutation();
   const methods = useForm();
   const formSubmit = async (data) => {
-    await setLogin(data);
-    navigate("/");
+    try {
+      await setLogin(data).unwrap();
+      dispatch(setIsLogin(true));
+      navigate("/");
+    } catch (err) {
+      setError(err.data.message);
+    }
   };
-
   return (
     <div className="md:flex">
       <div className="md:w-1/2">
@@ -59,6 +68,9 @@ const Login = () => {
             >
               forgot password ?
             </Link>
+            {error && (
+              <div className="my-1 font-medium text-red-600">{error}</div>
+            )}
             <div className="mt-4">
               <button
                 className="py-3 w-full rounded-md hover:bg-blue-800  bg-blue-600 text-white text-md"
