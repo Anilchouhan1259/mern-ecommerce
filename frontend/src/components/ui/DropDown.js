@@ -10,7 +10,7 @@ const DropDown = ({ handler }) => {
   return (
     <div>
       <select
-        className="border-2 border-gray-400 w-56 p-1 rounded-md"
+        className="border-2 border-gray-600 w-56 p-1 rounded-md"
         onChange={handleChange}
       >
         <option
