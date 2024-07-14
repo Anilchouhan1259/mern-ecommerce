@@ -62,7 +62,7 @@ async function userLogin(req, res) {
           const token = jwt.sign(
             { userId: user.id },
             process.env.JWT_SECRET_KEY,
-            { expiresIn: "1h" }
+            { expiresIn: "1d" }
           );
           return res
             .status(200)
@@ -115,10 +115,77 @@ async function postUserInfo(req, res) {
   );
   return res.status(201).json(updatedValue);
 }
+async function postShippingAddress(req, res) {
+  const {
+    userId,
+    firstName,
+    lastName,
+    email,
+    contactNumber,
+    street,
+    city,
+    state,
+    country,
+    postalCode,
+  } = req.body;
+
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !contactNumber ||
+    !street ||
+    !city ||
+    !state ||
+    !country ||
+    !postalCode
+  ) {
+    return res.status(400).json({
+      message: "all field is required required fields",
+    });
+  } else {
+    const newShippingAddress = {
+      firstName,
+      lastName,
+      email,
+      contactNumber,
+      street,
+      city,
+      state,
+      country,
+      postalCode,
+    };
+
+    try {
+      const result = await userModel.updateOne(
+        { _id: userId },
+        { $push: { shippingAddress: newShippingAddress } }
+      );
+      res.status(201).json({ message: "Shipping address added successfully" });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+}
+async function getShippingAddress(req, res) {
+  const { userId } = req.body;
+  try {
+    const shippingAddress = await userModel
+      .findOne({ _id: userId })
+      .select("shippingAddress");
+
+    console.log(shippingAddress);
+    return res.status(200).json(shippingAddress);
+  } catch (err) {
+    return res.status(500).json({ message: "internal Server error" });
+  }
+}
 module.exports = {
   userRegistration,
   userLogin,
   userLogout,
   getInfo,
   postUserInfo,
+  postShippingAddress,
+  getShippingAddress,
 };

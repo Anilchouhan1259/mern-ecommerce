@@ -6,6 +6,8 @@ const {
   userLogout,
   getInfo,
   postUserInfo,
+  postShippingAddress,
+  getShippingAddress,
 } = require("../controllers/users.controllers");
 const { isAuthenticated } = require("../middlewares/isAuthenticated");
 
@@ -16,5 +18,7 @@ usersRoutes.post("/signup", userRegistration);
 usersRoutes.post("/logout", userLogout);
 usersRoutes.get("/userInfo", isAuthenticated, getInfo);
 usersRoutes.post("/userInfo", isAuthenticated, postUserInfo);
+usersRoutes.post("/postAddress", postShippingAddress);
+usersRoutes.get("/getAddress", isAuthenticated, getShippingAddress);
 
 module.exports = usersRoutes;

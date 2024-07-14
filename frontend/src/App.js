@@ -10,6 +10,7 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import Success from "./components/Success";
 import ProfilePage from "./Pages/ProfilePage";
 import Orders from "./components/Orders";
+import ShippingAddressPage from "./Pages/ShippingAddressPage";
 import ShipmentTracker from "./components/ShipmentTracker";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/profile" element={<ProfilePage />}></Route>
           <Route path="/orders" element={<Orders />}></Route>
           <Route path="/track" element={<ShipmentTracker />}></Route>
+          <Route path="/address" element={<ShippingAddressPage />}></Route>
         </Routes>
       </Router>
     </div>

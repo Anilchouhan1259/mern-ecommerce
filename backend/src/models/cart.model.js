@@ -5,6 +5,9 @@ const cartSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  totalPrice: {
+    type: Number,
+  },
   products: [
     {
       title: {

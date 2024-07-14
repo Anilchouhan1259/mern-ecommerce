@@ -11,8 +11,6 @@ const productsApi = createApi({
           const params = {
             category: shopQuery.category,
           };
-
-          // Conditionally add the sort_by parameter
           if (
             shopQuery.sort_by === "low_to_high" ||
             shopQuery.sort_by === "high_to_low"

@@ -66,6 +66,31 @@ const usersApi = createApi({
           };
         },
       }),
+      getAddress: builder.query({
+        query: () => {
+          return {
+            url: "/getAddress",
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-type": "application/json;charset=UTF-8",
+            },
+          };
+        },
+      }),
+      postAddress: builder.mutation({
+        query: (data) => {
+          return {
+            url: "/postAddress",
+            method: "POST",
+            body: data,
+            credentials: "include",
+            headers: {
+              "Content-type": "application/json;charset=UTF-8",
+            },
+          };
+        },
+      }),
     };
   },
 });
@@ -75,5 +100,7 @@ export const {
   useLogoutMutation,
   useUserInfoQuery,
   useChangeUserInfoMutation,
+  useGetAddressQuery,
+  usePostAddressMutation,
 } = usersApi;
 export { usersApi };

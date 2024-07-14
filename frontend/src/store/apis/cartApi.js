@@ -5,6 +5,7 @@ const cartApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000/cart",
   }),
+  tagTypes: ["Cart"],
   endpoints(builder) {
     return {
       addToCart: builder.mutation({
@@ -21,16 +22,35 @@ const cartApi = createApi({
         },
       }),
       getCart: builder.query({
-        query: (id) => {
+        query: () => {
           return {
             url: `/`,
             method: "GET",
             credentials: "include",
           };
         },
+        providesTags: ["Cart"],
+      }),
+      changeQuantity: builder.mutation({
+        query: (quantity) => {
+          return {
+            url: "/updateQuantity",
+            method: "POST",
+            credentials: "include",
+            body: quantity,
+            headers: {
+              "Content-type": "application/json;charset=UTF-8",
+            },
+          };
+        },
+        invalidatesTags: ["Cart"],
       }),
     };
   },
 });
-export const { useAddToCartMutation, useGetCartQuery } = cartApi;
+export const {
+  useAddToCartMutation,
+  useGetCartQuery,
+  useChangeQuantityMutation,
+} = cartApi;
 export { cartApi };

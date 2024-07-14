@@ -24,14 +24,14 @@ const ShopPage = () => {
     }));
   };
   return (
-    <div className="mx-20">
+    <div className="mx-4 md:mx-20">
       <div className="flex justify-between">
         <div>
           <DropDown handler={getCurentCategory}>Living Room</DropDown>
         </div>
         <div>
           <select
-            className="border-2 border-gray-600  p-1 rounded-md"
+            className="border-2 border-gray-600 w-16  p-1 rounded-md"
             onChange={handleChange}
           >
             <option value="" style={{ display: "none" }}>
@@ -46,7 +46,7 @@ const ShopPage = () => {
       {isFetching ? (
         "fetching"
       ) : (
-        <div className="gap-x-20 grid grid-cols-5 content-center mt-4">
+        <div className=" mx-auto md:gap-x-20 grid md:grid-cols-5 grid-cols-2 content-center mt-4">
           {data.map((item) => {
             return <Card key={item._id} item={item} />;
           })}

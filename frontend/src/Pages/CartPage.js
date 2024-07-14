@@ -1,16 +1,15 @@
-import { useNavigate } from "react-router-dom";
 import CartList from "../components/CartList";
+import { useNavigate } from "react-router-dom";
 import { useGetCartQuery } from "../store/apis/cartApi";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { setCartPrice } from "../store/slices/cartSlice";
 import { loadStripe } from "@stripe/stripe-js";
 
 const CartPage = () => {
-  let totalItem = 0;
-  let subTotal = 0;
-  const dispatch = useDispatch();
-  const { data, isFetching } = useGetCartQuery();
+  const navigate = useNavigate();
+  const { data, isFetching, refetch } = useGetCartQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    cacheTime: 0,
+  });
+
   const handleClick = async () => {
     const stripe = await loadStripe(
       "pk_test_51PFXg4SHA2LTzl7um6gLTHPCrF0cURi3qeKtenQf21tXV0ypkFum9N6cVNm7xEWmiDSkVYgePnXoOTVqjf44oy1T00BGcRoFcG"
@@ -19,7 +18,7 @@ const CartPage = () => {
       "http://localhost:8000/create-checkout-session",
       {
         method: "POST",
-        body: JSON.stringify({ cartPriceArray }),
+        body: JSON.stringify({ products: data.products }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
@@ -33,21 +32,6 @@ const CartPage = () => {
       console.log(result.error);
     }
   };
-  useEffect(() => {
-    if (!isFetching && data) {
-      const priceData = data.products.map(
-        ({ color, thumbnail, _id, ...rest }) => rest
-      );
-      dispatch(setCartPrice(priceData));
-    }
-  }, [dispatch, data, isFetching]);
-  const cartPriceArray = useSelector((state) => {
-    return state.cartPrice.cartPrice;
-  });
-  cartPriceArray.forEach((item) => {
-    totalItem += item.quantity;
-    subTotal += item.price * item.quantity;
-  });
   return (
     <div>
       {isFetching ? (
@@ -70,11 +54,11 @@ const CartPage = () => {
               <p className="font-semibold text-2xl">Cart summary</p>
               <div className="flex justify-between mt-8">
                 <p className="text-medium font-semibold">Items Total</p>
-                <p className="text-medium font-semibold">{totalItem}</p>
+                <p className="text-medium font-semibold">{data.totalItem}</p>
               </div>
               <div className="flex justify-between mt-2">
                 <p className="text-medium font-semibold">Sub Total</p>
-                <p className="text-medium font-semibold">{subTotal}</p>
+                <p className="text-medium font-semibold">500</p>
               </div>
               <div className="flex justify-between mt-2">
                 <p className="text-medium font-semibold">Gst</p>
@@ -83,9 +67,7 @@ const CartPage = () => {
               <div className="h-[1px] w-full bg-gray-300 mt-2"></div>
               <div className="flex justify-between mt-2">
                 <p className="text-medium font-semibold">Total</p>
-                <p className="text-medium font-semibold">
-                  {0.18 * subTotal + subTotal}
-                </p>
+                <p className="text-medium font-semibold">{data.totalAmount}</p>
               </div>
               <button
                 onClick={handleClick}
@@ -94,7 +76,7 @@ const CartPage = () => {
                 Checkout
               </button>
             </div>
-          </div>{" "}
+          </div>
         </div>
       )}
     </div>

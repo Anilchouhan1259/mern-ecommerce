@@ -21,7 +21,7 @@ const ProductDetail = () => {
     addToCart({
       skuId: data.sku[skuInd]._id,
       quantity: 1,
-      thumbnail: data.thumbnail,
+      thumbnail: data.sku[skuInd].images[0],
       productId: id,
       title: data.title,
       color: data.sku[skuInd].color,
