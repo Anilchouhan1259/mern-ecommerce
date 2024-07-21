@@ -1,7 +1,6 @@
 import CartList from "../components/CartList";
 import { useNavigate } from "react-router-dom";
 import { useGetCartQuery } from "../store/apis/cartApi";
-import { loadStripe } from "@stripe/stripe-js";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -11,26 +10,7 @@ const CartPage = () => {
   });
 
   const handleClick = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51PFXg4SHA2LTzl7um6gLTHPCrF0cURi3qeKtenQf21tXV0ypkFum9N6cVNm7xEWmiDSkVYgePnXoOTVqjf44oy1T00BGcRoFcG"
-    );
-    const response = await fetch(
-      "http://localhost:8000/create-checkout-session",
-      {
-        method: "POST",
-        body: JSON.stringify({ products: data.products }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }
-    );
-    const session = await response.json();
-    const result = stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-    if (result.error) {
-      console.log(result.error);
-    }
+    navigate("/address");
   };
   return (
     <div>

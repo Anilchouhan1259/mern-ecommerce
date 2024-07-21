@@ -7,15 +7,21 @@ const productsApi = createApi({
   endpoints(builder) {
     return {
       fetchProducts: builder.query({
-        query: (shopQuery) => {
-          const params = {
-            category: shopQuery.category,
-          };
+        query: (productQuery) => {
+          const params = {};
+          if (productQuery.limit && productQuery.page) {
+            params.limit = productQuery.limit;
+            params.page = productQuery.page;
+          }
+          if (productQuery.category) {
+            params.category = productQuery.category;
+          }
+
           if (
-            shopQuery.sort_by === "low_to_high" ||
-            shopQuery.sort_by === "high_to_low"
+            productQuery.sort_by === "low_to_high" ||
+            productQuery.sort_by === "high_to_low"
           ) {
-            params.sort_by = shopQuery.sort_by;
+            params.sort_by = productQuery.sort_by;
           }
 
           return {

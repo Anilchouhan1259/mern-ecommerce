@@ -10,6 +10,7 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import Success from "./components/Success";
 import ProfilePage from "./Pages/ProfilePage";
 import Orders from "./components/Orders";
+import Footer from "./components/Footer";
 import ShippingAddressPage from "./Pages/ShippingAddressPage";
 import ShipmentTracker from "./components/ShipmentTracker";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/track" element={<ShipmentTracker />}></Route>
           <Route path="/address" element={<ShippingAddressPage />}></Route>
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

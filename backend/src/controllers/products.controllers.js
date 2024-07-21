@@ -2,8 +2,6 @@ const productModel = require("../models/product.model");
 
 async function postProduct(req, res) {
   const { title, discription, price, category, thumbnail, sku } = req.body;
-  console.log(req.body);
-
   if (title && discription && price && category && thumbnail && sku) {
     try {
       await productModel.updateOne(
@@ -41,7 +39,18 @@ async function postProduct(req, res) {
 }
 async function getProductsByCategory(req, res) {
   const category = req.query.category;
+  if (req.query.page && req.query.limit) {
+    const page = Math.abs(parseInt(req.query.page)) || 1;
+    const limit = Math.abs(parseInt(req.query.limit)) || 5;
+    const skip = (page - 1) * limit;
 
+    try {
+      const products = await productModel.find({}).skip(skip).limit(limit);
+      return res.status(200).json(products);
+    } catch {
+      return res.status(401).json({ message: "somethig unexpected happened" });
+    }
+  }
   if (req.query.sort_by) {
     const order = req.query.sort_by === "low_to_high" ? 1 : -1;
     const products = await productModel
@@ -61,8 +70,21 @@ async function getProductsById(req, res) {
   const product = await productModel.findOne({ _id: id });
   res.status(200).json(product);
 }
+async function getProduct(req, res) {
+  const page = Math.abs(parseInt(req.query.page)) || 1;
+  const limit = Math.abs(parseInt(req.query.limit)) || 5;
+  const skip = (page - 1) * limit;
+
+  try {
+    const products = await productModel.find({}).skip(skip).limit(limit);
+    return res.status(200).json(products);
+  } catch {
+    return res.status(401).json({ message: "somethig unexpected happened" });
+  }
+}
 module.exports = {
   postProduct,
   getProductsByCategory,
   getProductsById,
+  getProduct,
 };

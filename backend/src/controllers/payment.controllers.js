@@ -1,5 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const YOUR_DOMAIN = "http://localhost:3000";
+const cartModel = require("../models/cart.model");
 async function getSessionData(req, res) {
   const { sessionId } = req.query;
   const session = await stripe.checkout.sessions.retrieve(sessionId);
@@ -30,8 +31,9 @@ async function webhookHandler(request, response) {
   response.json({ received: true });
 }
 async function checkOutSession(req, res) {
-  const { products, userId } = req.body;
-  console.log("data", products, userId);
+  const { userId, addressInd } = req.body;
+  const cartData = await cartModel.findOne({ userId }).select("products -_id");
+  const products = cartData.products;
   const lineItem = products.map((product) => {
     return {
       price_data: {
@@ -50,18 +52,6 @@ async function checkOutSession(req, res) {
       quantity: product.quantity,
     };
   });
-  // const lineItem = cartPriceArray.map((item) => {
-  //   return {
-  //     price_data: {
-  //       currency: "inr",
-  //       product_data: {
-  //         name: item.title,
-  //       },
-  //       unit_amount: item.price * 100,
-  //     },
-  //     quantity: item.quantity,
-  //   };
-  // });
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: lineItem,
@@ -70,6 +60,7 @@ async function checkOutSession(req, res) {
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
     metadata: {
       items: JSON.stringify(metaData),
+      ind: JSON.stringify(addressInd),
     },
   });
 

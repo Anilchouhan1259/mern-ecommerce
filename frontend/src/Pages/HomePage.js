@@ -1,4 +1,14 @@
+import { useFetchProductsQuery } from "../store/apis/productsApi";
+import Card from "../components/Card";
 const HomePage = () => {
+  let newArrival;
+  const { data, isFetching } = useFetchProductsQuery({ limit: 5, page: 1 });
+
+  if (!isFetching) {
+    newArrival = data.map((product) => {
+      return <Card item={product} />;
+    });
+  }
   return (
     <div className="w-full">
       <div className="md:flex">
@@ -20,15 +30,11 @@ const HomePage = () => {
           <button className="rounded-lg bg-blue-700 p-2"> Shopping Now</button>
         </div>
       </div>
-      <div>
-        <p className="">Just In</p>
-        {/* <div className="flex">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div> */}
+      <div className="mx-20">
+        <p className="text-lg font-semibold">New Arrivals</p>
+        <div className="mx-auto md:gap-x-12 flex  flex-nowrap md:flex-wrap content-center overflow-hidden mt-4">
+          {newArrival}
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,22 @@
 import Input from "./Input";
+import { usePostAddressMutation } from "../store/apis/usersApi";
 import { FormProvider, useForm } from "react-hook-form";
 const AddAddess = ({ showAddress }) => {
-  const formSubmit = () => {};
+  const [postAddress, { isLoading }] = usePostAddressMutation();
   const methods = useForm();
   const handleClick = () => {
     showAddress();
   };
+  const formSubmit = (data) => {
+    try {
+      postAddress(data).unwrap();
+      showAddress();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
-    <div className="">
+    <div className="absolute top-4 z-100 left-8 w-4/5 md:w-1/2 bg-blue-200 px-2 md:py-4 md:px-12 rounded-md md:left-64">
       <button className="w-1" onClick={handleClick}>
         X
       </button>
@@ -28,7 +37,7 @@ const AddAddess = ({ showAddress }) => {
           <Input
             placeholder="Last Name"
             type="text"
-            name="LastName"
+            name="lastName"
             className={"mt-1"}
             validation={{
               required: {
@@ -40,7 +49,7 @@ const AddAddess = ({ showAddress }) => {
           <Input
             placeholder="Phone Number"
             type="number"
-            name="contactName"
+            name="contactNumber"
             className={"mt-1"}
             validation={{
               required: {

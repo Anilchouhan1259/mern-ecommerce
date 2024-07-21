@@ -1,15 +1,17 @@
 const mongoose = require("mongoose");
+const userModel = require("../models/users.model");
 const orderModel = require("../models/order.model");
 const productModel = require("../models/product.model");
 
 async function postOrder(req, res) {
-  const { userId, items } = req.body;
-
+  const { userId, items, ind } = req.body;
   const products = JSON.parse(items);
-  console.log(products);
   const productsSkuId = products.map((obj) => obj.skuId);
   const objectIds = productsSkuId.map((id) => new mongoose.Types.ObjectId(id));
-  console.log(objectIds);
+  const Address = await userModel
+    .findOne({ _id: userId })
+    .select("shippingAddress -_id");
+  const shippingAddress = Address.shippingAddress[ind];
   const productsWithoutQuantity = await productModel.aggregate([
     {
       $match: { "sku._id": { $in: objectIds } },
@@ -58,8 +60,6 @@ async function postOrder(req, res) {
   const order = productsWithoutQuantity.map((product) => {
     const { _id, sku, ...rest } = product;
     const productId = _id;
-
-    // Extract and rename the skuId within the sku object
     const { _id: skuId, ...skuRest } = sku;
 
     const obj2 = products.find((obj) => obj.skuId == product.sku._id);
@@ -72,8 +72,7 @@ async function postOrder(req, res) {
         }
       : product;
   });
-  console.log(order);
-  await orderModel.create({ userId, products: order });
+  await orderModel.create({ userId, products: order, shippingAddress });
 
   return res.status(400).json({ order });
 }

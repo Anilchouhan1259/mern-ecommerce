@@ -123,9 +123,7 @@ async function postShippingAddress(req, res) {
     email,
     contactNumber,
     street,
-    city,
     state,
-    country,
     postalCode,
   } = req.body;
 
@@ -135,9 +133,7 @@ async function postShippingAddress(req, res) {
     !email ||
     !contactNumber ||
     !street ||
-    !city ||
     !state ||
-    !country ||
     !postalCode
   ) {
     return res.status(400).json({
@@ -150,9 +146,7 @@ async function postShippingAddress(req, res) {
       email,
       contactNumber,
       street,
-      city,
       state,
-      country,
       postalCode,
     };
 
@@ -173,8 +167,6 @@ async function getShippingAddress(req, res) {
     const shippingAddress = await userModel
       .findOne({ _id: userId })
       .select("shippingAddress");
-
-    console.log(shippingAddress);
     return res.status(200).json(shippingAddress);
   } catch (err) {
     return res.status(500).json({ message: "internal Server error" });

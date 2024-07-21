@@ -1,9 +1,10 @@
-import React from "react";
-
-const AddressCard = ({ address }) => {
+const AddressCard = ({ address, className, onClick }) => {
   return (
-    <div className="w-96 p-2 border-[1px] rounded-lg border-gray-600 text-sm">
-      <div className="flex gap-x-1">
+    <div
+      onClick={onClick}
+      className={`font-medium w-96 mx-auto mt-2 p-2 border-[1px] rounded-lg border-gray-600 text-sm cursor-pointer ${className}`}
+    >
+      <div className="font-semibold text-md flex gap-x-1">
         <div>{address.firstName}</div>
         <div> {address.lastName}</div>
       </div>

@@ -4,9 +4,14 @@ const {
   getSessionData,
   webhookHandler,
 } = require("../controllers/payment.controllers");
+const { isAuthenticated } = require("../middlewares/isAuthenticated");
 const paymentRoutes = express.Router();
 
-paymentRoutes.post("/create-checkout-session", checkOutSession);
+paymentRoutes.post(
+  "/create-checkout-session",
+  isAuthenticated,
+  checkOutSession
+);
 paymentRoutes.get("/checkout-session", getSessionData);
 paymentRoutes.post(
   "/webhook",

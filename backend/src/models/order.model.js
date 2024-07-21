@@ -1,5 +1,34 @@
 const mongoose = require("mongoose");
-
+const addressSchema = mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  contactNumber: {
+    type: Number,
+    required: true,
+  },
+  street: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  postalCode: {
+    type: String,
+    required: true,
+  },
+});
 const orderItemSchema = mongoose.Schema({
   title: {
     type: String,
@@ -42,6 +71,7 @@ const orderSchema = mongoose.Schema({
     default: "order Pending",
   },
   products: [orderItemSchema],
+  shippingAddress: addressSchema,
 });
 
 module.exports = mongoose.model("order", orderSchema);

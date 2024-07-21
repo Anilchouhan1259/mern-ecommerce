@@ -13,7 +13,7 @@ const Success = () => {
       const response = await fetch(
         "http://localhost:8000/checkout-session?sessionId=" + sessionId
       ).then((res) => res.json());
-      postOrder({ items: response.metadata.items });
+      postOrder({ items: response.metadata.items, ind: response.metadata.ind });
       setSession(response);
     }
     fetchSession();

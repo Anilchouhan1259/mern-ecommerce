@@ -1,8 +1,8 @@
 import { GrInProgress } from "react-icons/gr";
 import { MdCurrencyRupee } from "react-icons/md";
+import AddressCard from "./AddressCard";
 
 const OrdersList = ({ orderData }) => {
-  console.log(orderData);
   return (
     <div>
       <div className="bg-blue-100 w-full h-16 rounded-md flex items-center">
@@ -50,6 +50,10 @@ const OrdersList = ({ orderData }) => {
           </div>
         );
       })}
+      <AddressCard
+        className={"w-full bg-slate-300"}
+        address={orderData.shippingAddress}
+      />
     </div>
   );
 };
