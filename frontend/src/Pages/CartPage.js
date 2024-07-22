@@ -1,14 +1,23 @@
 import CartList from "../components/CartList";
 import { useNavigate } from "react-router-dom";
 import { useGetCartQuery } from "../store/apis/cartApi";
+import LoginRequest from "../components/LoginRequest";
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const { data, isFetching, refetch } = useGetCartQuery(undefined, {
+  const { data, isFetching, refetch, error } = useGetCartQuery(undefined, {
     refetchOnMountOrArgChange: true,
     cacheTime: 0,
   });
+  console.log(isFetching, error);
 
+  if (error) {
+    if (error.data && error.data.message === "please login first") {
+      return <LoginRequest />;
+    } else {
+      return <div>Error: {error.message}</div>;
+    }
+  }
   const handleClick = async () => {
     navigate("/address");
   };
