@@ -4,10 +4,6 @@ import { useGetOrderQuery } from "../store/apis/orderApi";
 
 const Orders = () => {
   const { data, isFetching } = useGetOrderQuery();
-  if (!isFetching) {
-    console.log(data);
-  }
-
   return (
     <div className="">
       {isFetching

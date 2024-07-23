@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsNavBtnClicked } from "../../store/slices/profileSlice";
 const NavButton = ({ handleClick }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const isNavBtnClicked = useSelector((state) => {
+    return state.profile.isNavBtnClicked;
+  });
+
   const isClicked = () => {
-    console.log("clicked");
-    setIsOpen(!isOpen);
-    handleClick();
+    dispatch(setIsNavBtnClicked(!isNavBtnClicked));
   };
   const hamburegerline = `h-1 w-6 my-0.5 rounded-full bg-black transition ease`;
   return (
@@ -14,19 +17,19 @@ const NavButton = ({ handleClick }) => {
     >
       <span
         className={`${hamburegerline}${
-          isOpen
+          isNavBtnClicked
             ? "transform duration-300 rotate-45 translate-y-2 group-hover:opacity-100"
             : "group-hover:opacity-100"
         }`}
       ></span>
       <span
         className={`${hamburegerline} ${
-          isOpen ? "opacity-0" : "group-hover:opacity-100"
+          isNavBtnClicked ? "opacity-0" : "group-hover:opacity-100"
         }`}
       ></span>
       <span
         className={`${hamburegerline}${
-          isOpen
+          isNavBtnClicked
             ? "transform duration-300 -rotate-45 -translate-y-2"
             : "opacity-50 group-hover:opacity-100"
         }`}

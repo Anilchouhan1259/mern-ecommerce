@@ -3,21 +3,16 @@ import NavButton from "./ui/NavButton";
 import NavLinks from "./NavLinks";
 import { NavLink } from "react-router-dom";
 import Notification from "./ui/Notification";
-import { useState } from "react";
 
 const Navbar = () => {
-  const [isClicked, setIsClicked] = useState(false);
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-  };
   return (
     <div className=" border-b-[1px] border-gray-200 w-full">
       <nav className=" flex justify-between items-center mx-20 my-2  ">
         <div className="block md:hidden absolute aspect-square  z-100 left-2 top-2">
-          <NavButton handleClick={handleClick} />
+          <NavButton />
         </div>
         <div className="text-xl font-semibold">Fieren</div>
-        <NavLinks isClicked={isClicked} />
+        <NavLinks />
 
         <NavLink to="/cart">
           <FiShoppingCart

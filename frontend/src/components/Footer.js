@@ -15,7 +15,7 @@ const Footer = () => {
           <FaYoutube size={20} />
         </div>
       </div>
-      <div className=" md:ml-40 md:flex gap-x-16 ">
+      <div className=" md:ml-40 md:flex gap-x-8">
         <div className="space-y-4 flex flex-col py-4 px-4 md:border-0 border-b-[1px] border-white">
           <p className="font-semibold ">Page</p>
 
