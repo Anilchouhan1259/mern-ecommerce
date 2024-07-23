@@ -70,6 +70,14 @@ const orderSchema = mongoose.Schema({
     type: String,
     default: "order Pending",
   },
+  orderDate: { type: Date, default: Date.now },
+  deliveryDate: {
+    type: Date,
+    default: () => {
+      const now = new Date();
+      return new Date(now.setDate(now.getDate() + 7));
+    },
+  },
   products: [orderItemSchema],
   shippingAddress: addressSchema,
 });

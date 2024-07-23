@@ -13,9 +13,10 @@ const ProfileOptions = ({ optionHandler }) => {
         className="block md:hidden border-2 border-gray-400 w-56 p-1 rounded-md mx-auto"
         onChange={handleChange}
       >
-        {options.map((option) => {
+        {options.map((option, index) => {
           return (
             <option
+              key={index}
               value={option}
               className="my-1 mx-1 p-1 font-normal rounded-md text-gray-400 hover:text-black hover:font-semibold hover:bg-gray-200"
             >
@@ -25,12 +26,13 @@ const ProfileOptions = ({ optionHandler }) => {
         })}
       </select>
       <div className="hidden md:block ">
-        {options.map((option) => {
+        {options.map((option, index) => {
           return (
             <div
               className="my-4 hover:cursor-pointer"
               data-value={option}
               onClick={handleClick}
+              key={index}
             >
               {option}
             </div>

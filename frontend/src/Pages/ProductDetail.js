@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import LoginRequest from "../components/LoginRequest";
 import Star from "../components/Star";
 import Carousel from "../components/ui/Carousel";
 import Skeleton from "../components/ui/Skeleton";
@@ -16,6 +17,18 @@ const ProductDetail = () => {
   const [skuInd, setSkuInd] = useState(0);
   const { data, isFetching } = useFetchProductDetailQuery(id);
   const [addToCart, result] = useAddToCartMutation();
+
+  console.log(result.error);
+  if (result.isError) {
+    if (
+      result.error.data &&
+      result.error.data.message === "please login first"
+    ) {
+      return <LoginRequest />;
+    } else {
+      return <div>Error: {result.error.message}</div>;
+    }
+  }
 
   const handleClick = () => {
     addToCart({

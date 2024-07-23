@@ -9,8 +9,6 @@ const CartPage = () => {
     refetchOnMountOrArgChange: true,
     cacheTime: 0,
   });
-  console.log(isFetching, error);
-
   if (error) {
     if (error.data && error.data.message === "please login first") {
       return <LoginRequest />;

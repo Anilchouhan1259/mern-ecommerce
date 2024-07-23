@@ -5,14 +5,15 @@ import { useGetOrderQuery } from "../store/apis/orderApi";
 const Orders = () => {
   const { data, isFetching } = useGetOrderQuery();
   if (!isFetching) {
+    console.log(data);
   }
-  console.log(data);
+
   return (
     <div className="">
       {isFetching
         ? "fetching .."
-        : data.map((order) => {
-            return <OrdersList orderData={order} />;
+        : data.map((order, index) => {
+            return <OrdersList key={index} orderData={order} />;
           })}
     </div>
   );

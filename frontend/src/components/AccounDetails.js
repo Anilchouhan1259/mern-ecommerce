@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
+import LoginRequest from "./LoginRequest";
 import Input from "./Input";
 import {
   useUserInfoQuery,
@@ -8,7 +9,7 @@ import {
 } from "../store/apis/usersApi";
 const AccounDetails = () => {
   const navigate = useNavigate();
-  const { data, isFetching } = useUserInfoQuery();
+  const { data, isFetching, error } = useUserInfoQuery();
   const [changeInfo, responseInfo] = useChangeUserInfoMutation();
   const methods = useForm();
   const formSubmit = async (data) => {
@@ -19,7 +20,6 @@ const AccounDetails = () => {
       console.log("error");
     }
   };
-
   useEffect(() => {
     if (data) {
       methods.reset({
@@ -31,6 +31,13 @@ const AccounDetails = () => {
       });
     }
   }, [data, methods]);
+  if (error) {
+    if (error.data && error.data.message === "please login first") {
+      return <LoginRequest />;
+    } else {
+      return <div>Error: {error.message}</div>;
+    }
+  }
 
   return (
     <div>
